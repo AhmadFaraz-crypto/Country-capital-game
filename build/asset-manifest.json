@@ -1,0 +1,15 @@
+{
+  "files": {
+    "main.css": "/country-capitals-game/static/css/main.72a9d032.css",
+    "main.js": "/country-capitals-game/static/js/main.928bddfb.js",
+    "static/js/787.9d8a1461.chunk.js": "/country-capitals-game/static/js/787.9d8a1461.chunk.js",
+    "index.html": "/country-capitals-game/index.html",
+    "main.72a9d032.css.map": "/country-capitals-game/static/css/main.72a9d032.css.map",
+    "main.928bddfb.js.map": "/country-capitals-game/static/js/main.928bddfb.js.map",
+    "787.9d8a1461.chunk.js.map": "/country-capitals-game/static/js/787.9d8a1461.chunk.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.72a9d032.css",
+    "static/js/main.928bddfb.js"
+  ]
+}

@@ -96,6 +96,7 @@ const CountryCapitalGame = () => {
 
   return (
     <div className="App">
+      <h1>Country Capitals Game</h1>
       {entries.length > 0 ? (
         entries.map(([key, val]) => (
           <>
