@@ -25,7 +25,6 @@
     _At this point you can run `npm start` to see the example app at `http://localhost:3000`._
 5.  Run `npm run clean` to delete the example app.
 
-Demo
+## Demo
 
-
-<iframe width="560" height="315" src="https://www.youtube.com/embed/HvwksjUVdUk" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+https://www.youtube.com/embed/HvwksjUVdUk
