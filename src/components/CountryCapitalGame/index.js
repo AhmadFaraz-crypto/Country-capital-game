@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 
 const data = {
   "Germany": "Berlin",
@@ -8,6 +8,7 @@ const data = {
 };
 
 const CountryCapitalGame = () => {
+  const valuesRef = useRef(Object.entries(data));
   const [entries, setEntries] = useState({});
 
   const [state, setState] = useState({
@@ -27,22 +28,30 @@ const CountryCapitalGame = () => {
   };
 
   useEffect(() => {
-    const shuffleArray = Object.entries(data).sort(() => Math.random() - 0.5);
-    setEntries(shuffleArray);
+    shuffleData(data);
   }, []);
+
+  const shuffleData = (values) => {
+    const shuffleObjectKeys = Object.keys(values).sort(() => Math.random() - 0.5);
+    const shuffleObjectValues = Object.values(values).sort(() => Math.random() - 0.5);
+    const newArr = shuffleObjectKeys.map((ele, index) => ({[ele] : shuffleObjectValues[index]}));
+    const newEntries = Object.assign({}, ...newArr);
+    setEntries(Object.entries(newEntries));
+  }
 
   const getFilterData = (val1, val2) => {
     let filter = [];
     if (val1) {
-      filter = entries.filter(
+      filter = valuesRef.current.filter(
         ([key, _]) => key.toLowerCase() === val1.toLowerCase()
       );
     } else {
-      filter = entries.filter(
+      filter = valuesRef.current.filter(
         ([_, val]) => val.toLowerCase() === val2.toLowerCase()
       );
     }
-    updateState({ filterData: filter });
+    const find = filter.find(d => d);
+    updateState({ filterData: find });
   };
 
   const add = (val1, val2) => {
@@ -74,15 +83,16 @@ const CountryCapitalGame = () => {
     const selectedCapital = state.capital ? state.capital : val2;
     if (
       !state.wrongVal &&
-      state.filterData[0][0]?.toLowerCase() ===
+      state.filterData[0]?.toLowerCase() ===
         selectedCountry?.toLowerCase() &&
-      state.filterData[0][1]?.toLowerCase() === selectedCapital?.toLowerCase()
+      state.filterData[1]?.toLowerCase() === selectedCapital?.toLowerCase()
     ) {
-      const removeSelected = entries.filter(
+      const removeSelected = valuesRef.current.filter(
         ([key, _]) => key.toLowerCase() !== selectedCountry.toLowerCase()
       );
       updateState({ country: "", capital: "" });
-      setEntries(removeSelected);
+      valuesRef.current = removeSelected;
+      shuffleData(Object.fromEntries(removeSelected));
     } else if (state.wrongVal && val1) {
       updateState({ country: val1 });
     } else if (state.wrongVal && val2) {
@@ -97,9 +107,9 @@ const CountryCapitalGame = () => {
   return (
     <div className="App">
       <h1>Country Capitals Game</h1>
-      {entries.length > 0 ? (
+      {entries.length ? (
         entries.map(([key, val]) => (
-          <>
+          <div>
             <button
               style={
                 state.country.toLowerCase() === key.toLowerCase() &&
@@ -131,7 +141,7 @@ const CountryCapitalGame = () => {
             >
               {val}
             </button>
-          </>
+          </div>
         ))
       ) : (
         <p>Congratulations</p>
